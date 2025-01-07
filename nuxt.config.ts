@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
@@ -7,5 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     ["@nuxtjs/google-fonts", { families: { Montserrat: true } }],
   ],
-  plugins: ["~/plugins/toast.js"],
+  tailwindcss: {
+    cssPath: "~/assets/css/tailwind.css",
+  },
 });
