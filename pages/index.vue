@@ -1,6 +1,6 @@
 <template lang="pug">
-    .container
-        .grid.grid-cols-2.gap-2.mt-4(class="sm:grid-cols-3 lg:grid-cols-4" v-if="!loading && products.length > 0")
+    .container.flex.flex-col.justify-center.items-center
+        .grid.grid-cols-2.mt-4.gap-4(class="sm:grid-cols-3 lg:grid-cols-5" v-if="!loading && products.length > 0")
             ProductCard(v-for="product in products" :key="product.id" :product="product")
         .flex.justify-center(v-if="loading")
             p.animate-pulse Loading...
