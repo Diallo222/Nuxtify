@@ -1,9 +1,9 @@
 <template lang="pug">
-    .card(class="card")
-      img.card-img-top(:src="product.image" alt="Card image cap" class="image")
-      .card-body
-        h4.card-title ${{product.price}}
-        p.card-text {{product.title}}
+    .bg-white.rounded-xl.p-2(class="w-[8rem] sm:w-[12rem] md:w-[14rem]")
+      img.w-full.object-contain(class="h-20 md:h-40" :src="product.image" alt="Card image cap")
+      .card-body.space-y-2
+        h4.text-black.font-semibold.text-xl ${{product.price}}
+        p.text-sm {{product.title}}
 </template>
 
 <script setup lang="ts">
@@ -14,16 +14,3 @@ const props = defineProps({
   },
 });
 </script>
-
-<style scoped>
-.card {
-  width: 14rem;
-  margin: 10px;
-  padding: 0px;
-}
-.image {
-  height: 14rem;
-  width: 100%;
-  object-fit: contain;
-}
-</style>

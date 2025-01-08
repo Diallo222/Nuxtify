@@ -1,5 +1,5 @@
 <template lang="pug">
-    nav.flex.w-full.justify-between.items-center.sticky.top-0.z-50.bg-white.py-2.px-4
+    nav.flex.w-full.justify-between.items-center.sticky.top-0.z-50.bg-white.py-2.px-4.rounded-3xl
         NuxtLink.flex.items-center.gap-2(to="/")
             img(src="/public/favicon.ico" style="width: 40px;object-fit: contain;")
             p.text-black.font-semibold Nuxtify
