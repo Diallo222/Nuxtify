@@ -4,7 +4,7 @@
             img(src="/public/favicon.ico" style="width: 40px;object-fit: contain;")
             p.text-black.font-semibold Nuxtify
         .flex.gap-4
-            NuxtLink.nav-link.text-black(to="/login" v-if="!user") login
+            NuxtLink.nav-link.text-black(to="/login") login
             NuxtLink.nav-link.text-black(to="/about") About
 </template>
 <script setup lang="ts">

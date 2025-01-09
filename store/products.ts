@@ -11,6 +11,8 @@ interface Product {
 
 export const useProductsStore = defineStore("products", {
   state: () => ({
+    bannerProducts: [] as Product[],
+    bannerLoading: false,
     products: [] as Product[],
     productsLoading: false,
     categories: [] as string[],
@@ -18,6 +20,20 @@ export const useProductsStore = defineStore("products", {
     catLoading: false,
   }),
   actions: {
+    async fetchBannerProducts() {
+      this.bannerLoading = true;
+      try {
+        const data = await useApi("/products/category/men's clothing", {
+          method: "GET",
+        });
+        this.bannerProducts = data;
+        console.log("Banner products:", data);
+      } catch (error) {
+        console.error("Failed to fetch Banner products:", error);
+      } finally {
+        this.bannerLoading = false;
+      }
+    },
     async fetchProducts() {
       this.productsLoading = true;
       try {

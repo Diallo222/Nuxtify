@@ -1,9 +1,14 @@
 <template lang="pug">
-    .bg-white.p-2(class="w-[12rem] ")
-      img.w-full.object-contain(class="h-30 md:h-40" :src="product.image" alt="Card image cap")
-      .card-body.space-y-2
-        h4.text-black.font-semibold.text-xl ${{product.price}}
-        p.text-sm {{product.title}}
+  .bg-white.p-2(class="w-[12rem]")
+    img.w-full.object-contain.h-30(class="md:h-40" :src="product.image" alt="Card image cap")
+    .mt-2
+      p.text-xs.font-semibold.text-gray-600.uppercase {{product.category}}
+      .mt-1
+        p.text-sm.font-semibold.truncate {{product.title}}
+        .flex.items-center.justify-between.space-y-1
+          p.text-sm.font-semibold.text-green-600 ${{product.price}}
+          p.text-xs.font-semibold.text-gray-600
+            | {{product.rating.rate}} <span>| {{product.rating.count}}</span>
 </template>
 
 <script setup lang="ts">

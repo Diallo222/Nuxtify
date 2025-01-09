@@ -20,12 +20,14 @@ export const useAuthStore = defineStore("auth", {
       try {
         const data = await useApi("/auth/login", {
           method: "POST",
-          body: JSON.stringify({
+          body: {
             username: userName,
             password: password,
-          }),
+          },
         });
         this.user = data;
+        console.log("Login successful:", data);
+
         useCookie("authToken", {
           sameSite: "strict",
           secure: true,
