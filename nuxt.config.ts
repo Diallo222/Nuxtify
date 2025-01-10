@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
     ["@nuxtjs/google-fonts", { families: { Montserrat: true } }],
+    "@nuxt/image",
   ],
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",

@@ -16,8 +16,9 @@ export const useProductsStore = defineStore("products", {
     products: [] as Product[],
     productsLoading: false,
     categories: [] as string[],
-    selectedCategory: null as string | null,
     catLoading: false,
+    categoryProducts: [] as Product[],
+    catProductsLoading: false,
   }),
   actions: {
     async fetchBannerProducts() {
@@ -50,6 +51,7 @@ export const useProductsStore = defineStore("products", {
       try {
         const data = await useApi("/products/categories", { method: "GET" });
         this.categories = data;
+        console.log("Products for category:", data);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       } finally {
@@ -57,18 +59,16 @@ export const useProductsStore = defineStore("products", {
       }
     },
     async fetchCategoryProducts(category: string) {
-      this.selectedCategory = category;
-      this.productsLoading = true;
-      this.products = [];
+      this.catProductsLoading = true;
       try {
         const data = await useApi(`/products/category/${category}`, {
           method: "GET",
         });
-        this.products = await data;
+        this.categoryProducts = await data;
       } catch (error) {
         console.error("Failed to fetch products for category:", error);
       } finally {
-        this.productsLoading = false;
+        this.catProductsLoading = false;
       }
     },
   },

@@ -4,11 +4,13 @@
             img(src="/public/favicon.ico" style="width: 40px;object-fit: contain;")
             p.text-black.font-semibold Nuxtify
         .flex.gap-4
-            NuxtLink.nav-link.text-black(to="/login") login
+            NuxtLink.nav-link.text-black(to="/categories") Categories
             NuxtLink.nav-link.text-black(to="/about") About
+            NuxtLink.nav-link.text-black(to="/login") login
 </template>
 <script setup lang="ts">
-import { useAuthStore } from "@/store/auth";
+import { computed } from "vue";
+import { useAuthStore } from "../../store/auth";
 const authStore = useAuthStore();
 const user = computed(() => authStore.user);
 </script>

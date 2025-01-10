@@ -2,7 +2,7 @@
 
 <template lang="pug">
     .w-screen.h-screen.overflow-y-scroll.px-6.py-4.bg-slate-100(class="md:px-44")
-        Navbar
+        NavBar
         NuxtPage
 </template>
 
