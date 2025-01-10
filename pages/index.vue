@@ -6,12 +6,16 @@
 
 <script setup lang="ts">
 import { useProductsStore } from "@/store/products";
+import { useFavoritesStore } from "~/store/favorites";
+
+const productStore = useProductsStore();
+const favoritesStore = useFavoritesStore();
 
 onMounted(() => {
-  //   productStore.fetchBannerProducts();
   productStore.fetchProducts();
+  favoritesStore.loadFavorites();
 });
-const productStore = useProductsStore();
+
 const bannerProducts = computed(() => productStore.bannerProducts);
 const bannerLoading = computed(() => productStore.bannerLoading);
 const products = computed(() => productStore.allProducts);
