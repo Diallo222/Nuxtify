@@ -2,6 +2,7 @@
     .container.flex.flex-col.justify-center.items-center
         ProductCaroussel(:products="products.slice(0, 5)" :loading="loading")
         ProductGrid(:products="products" :loading="loading")
+        CustomLoader(:loading="loading")
 </template>
 
 <script setup lang="ts">
