@@ -1,12 +1,29 @@
 <template lang="pug">
-    nav.flex.w-full.justify-between.items-center.sticky.top-0.z-50.bg-white.py-2.px-4.rounded-3xl
-        NuxtLink.flex.items-center.gap-2(to="/")
-            img(src="/public/favicon.ico" style="width: 40px;object-fit: contain;")
-            p.text-black.font-semibold Nuxtify
-        .flex.gap-4
-            NuxtLink.nav-link.text-black(to="/categories") Categories
-            NuxtLink.nav-link.text-black(to="/about") About
-            NuxtLink.nav-link.text-black(to="/login") login
+    nav.flex.flex-col.w-full.justify-between.items-center.sticky.top-0.z-50.bg-white.px-4.py-2.gap-2
+        .flex.w-full.justify-between.border-b.border-black.py-2
+            .flex.flex-row.gap-4
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:facebook")
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:twitter")
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:youtube")
+            NuxtLink.flex.items-center.font-extrabold(to="/")
+                Icon(name="mdi:nuxt" size="1.5em")
+                p.text-black.uppercase.text-xl Nuxtify
+            .flex.flex-row.gap-4
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:account-box-outline")
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:cards-heart-outline")
+                button.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:cart-outline")
+        .flex.gap-4.uppercase.text-black.text-sm
+            NuxtLink(to="/") Home
+            //- NuxtLink(to="/categories") Categories
+            NuxtLink(to="/about") About
+            NuxtLink(to="/blog") blog
+            NuxtLink(to="/contact") Contact
 </template>
 <script setup lang="ts">
 import { computed } from "vue";

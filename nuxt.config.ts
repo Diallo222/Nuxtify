@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
-    ["@nuxtjs/google-fonts", { families: { Montserrat: true } }],
+    ["@nuxtjs/google-fonts", { families: { Rubik: true } }],
     "@nuxt/image",
     "@nuxt/icon",
   ],

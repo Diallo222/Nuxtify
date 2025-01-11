@@ -1,6 +1,6 @@
 <template lang="pug">
     .container.flex.flex-col.justify-center.items-center
-        //- Banner(:products="bannerProducts" loading="bannerLoading")
+        ProductCaroussel(:products="products.slice(0, 5)" :loading="loading")
         ProductGrid(:products="products" :loading="loading")
 </template>
 
@@ -15,9 +15,6 @@ onMounted(() => {
   productStore.fetchProducts();
   favoritesStore.loadFavorites();
 });
-
-const bannerProducts = computed(() => productStore.bannerProducts);
-const bannerLoading = computed(() => productStore.bannerLoading);
 const products = computed(() => productStore.allProducts);
 const loading = computed(() => productStore.loading);
 </script>

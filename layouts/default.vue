@@ -1,14 +1,14 @@
 <script setup lang="ts"></script>
 
 <template lang="pug">
-    .w-screen.h-screen.overflow-y-scroll.px-6.py-4.bg-slate-100(class="md:px-44")
+    .w-screen.h-screen.overflow-y-scroll.px-6.pb-4.bg-white(class="md:px-44")
         NavBar
         NuxtPage
 </template>
 
 <style>
 body {
-  font-family: "Montserrat", serif;
+  font-family: "Rubik", serif;
 }
 
 ::-webkit-scrollbar {
