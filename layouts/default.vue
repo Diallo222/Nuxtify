@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template lang="pug">
-    .w-screen.h-screen.overflow-y-scroll.px-6.pb-4.bg-white(class="md:px-44")
+    .w-screen.h-screen.overflow-y-scroll.px-6.pb-4.bg-white(class="md:px-16 lg:px-44")
         NavBar
         NuxtPage
 </template>
