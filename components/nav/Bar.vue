@@ -10,7 +10,7 @@
                     Icon(name="mdi:youtube")
             NuxtLink.flex.items-center.font-extrabold(to="/")
                 Icon(name="mdi:nuxt" size="1.5em")
-                p.text-black.uppercase.text-xl Nuxtify
+                p.text-black.uppercase.text-sm(class="md:text-xl") Nuxtify
             .flex.flex-row.gap-4
                 button.text-black.transition(class="hover:scale-110")
                     Icon(name="mdi:account-box-outline")
