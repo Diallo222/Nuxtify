@@ -1,7 +1,8 @@
 <template lang="pug">
     .container.flex.flex-col.justify-center.items-center
         ProductCaroussel(:products="products.slice(0, 5)" :loading="loading")
-        ProductGrid(:products="products" :loading="loading")
+        CategoryList
+        ProductGrid(:products="products.slice(0,8)" :loading="loading")
         CustomLoader(:loading="loading")
 </template>
 

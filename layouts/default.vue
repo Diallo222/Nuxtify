@@ -8,7 +8,7 @@
 
 <style>
 body {
-  font-family: "Rubik", serif;
+  font-family: "Barlow Condensed", serif;
 }
 
 ::-webkit-scrollbar {

@@ -1,6 +1,6 @@
 <template lang="pug">
   .container.flex.flex-col.mt-4(v-if="!loading && products.length > 0")
-    h2.text-xl.text-left.font-bold.text-black.uppercase(class="md:text-2xl") Top deals
+    h2.text-xl.text-left.font-bold.text-black.uppercase(class="md:text-5xl") Top deals
     .overflow-hidden.p-1.w-full.flex.flex-row.items-center.justify-between(class="md:p-6")
       button.bg-zinc-900.p-1.flex.items-center.justify-center.rounded-full.transition(class="md:p-2 hover:scale-110" @click="onPrevClick" aria-label="Prev")
         Icon(name="mdi:menu-left" size="1.5em" style="color: white")

@@ -1,6 +1,6 @@
 <template lang="pug">
     nav.flex.flex-col.w-full.justify-between.items-center.sticky.top-0.z-50.bg-white.px-4.py-2.gap-2
-        .flex.w-full.justify-between.border-b.border-black.py-2
+        .flex.w-full.justify-between.border-b-2.border-black.py-2
             .flex.flex-row.gap-4
                 button.text-black.transition(class="hover:scale-110")
                     Icon(name="mdi:facebook")
@@ -18,12 +18,12 @@
                     Icon(name="mdi:cards-heart-outline")
                 button.text-black.transition(class="hover:scale-110")
                     Icon(name="mdi:cart-outline")
-        .flex.gap-4.uppercase.text-black.text-sm
-            NuxtLink(to="/") Home
-            //- NuxtLink(to="/categories") Categories
-            NuxtLink(to="/about") About
-            NuxtLink(to="/blog") blog
-            NuxtLink(to="/contact") Contact
+        .flex.gap-4.uppercase.text-black.text-lg
+            NuxtLink.font-medium(to="/") Home
+            //- NuxtLink.font-medium(to="/categories") Categories
+            NuxtLink.font-medium(to="/about") About
+            NuxtLink.font-medium(to="/blog") blog
+            NuxtLink.font-medium(to="/contact") Contact
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
