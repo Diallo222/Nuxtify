@@ -1,8 +1,8 @@
 <template lang="pug">
-    .p-2.relative.space-y-2(class="w-[10rem] md:w-[12rem] lg:w-[16rem]")
+    .p-2.relative.space-y-2(class="w-[10rem] md:w-[12rem] lg:w-[16rem]" )
         button.p-2.flex.items-center.justify-center.rounded-full.absolute.top-2.right-2.transition(class="hover:bg-gray-200 hover:scale-110" :class="{ 'bg-black': isFavorite }, {'hover:bg-black': isFavorite}" @click="toggleFavorite" aria-label="Toggle favorite")
             Icon.self-center(:class="isFavorite ? 'text-white' : 'text-black'" :name="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'")
-        img.w-full.object-contain.h-24(class="md:h-52" :src="product.image" alt="Card image cap")
+        img.w-full.object-contain.h-24(class="md:h-52" :src="product.image" alt="Card image cap" @click="handleclick(product)")
         .mt-2
             p.text-sm.font-semibold.text-gray-600.uppercase {{product.category}}
             .space-y-2
@@ -18,7 +18,11 @@
 
 <script setup lang="ts">
 import { useFavoritesStore } from "~/store/favorites";
+import { useProductsStore } from "~/store/products";
 const favoritesStore = useFavoritesStore();
+const productStore = useProductsStore();
+
+const router = useRouter();
 
 const props = defineProps({
   product: {
@@ -31,9 +35,11 @@ const isFavorite = computed(() => {
   return favoritesStore.isFavorite(props.product);
 });
 
-console.log(props.product.id, isFavorite.value);
-
 const toggleFavorite = () => {
   favoritesStore.switchFavorite(props.product);
+};
+const handleclick = (product: any) => {
+  productStore.selectedProduct = product;
+  router.push(`/products/${product.id}`);
 };
 </script>

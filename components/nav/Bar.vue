@@ -9,15 +9,15 @@
                 button.text-black.transition(class="hover:scale-110")
                     Icon(name="mdi:youtube")
             NuxtLink.flex.items-center.font-extrabold(to="/")
-                Icon(name="mdi:nuxt" size="1.5em")
+                Icon(name="mdi:shopping" size="1.5em")
                 p.text-black.uppercase.text-sm(class="md:text-xl") Nuxtify
             .flex.flex-row.gap-4
-                button.text-black.transition(class="hover:scale-110")
-                    Icon(name="mdi:account-box-outline")
-                button.text-black.transition(class="hover:scale-110")
-                    Icon(name="mdi:cards-heart-outline")
-                button.text-black.transition(class="hover:scale-110")
-                    Icon(name="mdi:cart-outline")
+                NuxtLink.text-black.transition(class="hover:scale-110" to="/login")
+                    Icon(name="mdi:account-box")
+                NuxtLink.text-black.transition(class="hover:scale-110" to="/favorites")
+                    Icon(name="mdi:bookmark-multiple")
+                NuxtLink.text-black.transition(class="hover:scale-110")
+                    Icon(name="mdi:cart")
         .flex.gap-4.uppercase.text-black.text-lg
             NuxtLink.font-medium(to="/") Home
             //- NuxtLink.font-medium(to="/categories") Categories

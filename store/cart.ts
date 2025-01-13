@@ -6,14 +6,14 @@ export const useCartStore = defineStore("cart", {
     basket: [],
   }),
   actions: {
-    addProduct(product: Product) {
+    addProduct(product: any, quantity: number) {
       const exist = this.basket.find((item) => item.id === product.id);
       if (exist) {
         exist.quantity++;
       } else {
         this.basket.push({
           ...product,
-          quantity: 1,
+          quantity: quantity || 1,
         });
       }
     },

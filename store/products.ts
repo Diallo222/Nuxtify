@@ -10,6 +10,7 @@ export const useProductsStore = defineStore("products", {
     catLoading: false,
     categoryProducts: [] as Product[],
     catProductsLoading: false,
+    selectedProduct: null as Product | null,
   }),
   actions: {
     async fetchProducts() {
@@ -47,6 +48,12 @@ export const useProductsStore = defineStore("products", {
       } finally {
         this.catProductsLoading = false;
       }
+    },
+    setProduct(product: Product) {
+      this.selectedProduct = product;
+    },
+    clearProduct() {
+      this.selectedProduct = null;
     },
   },
   getters: {
