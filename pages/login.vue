@@ -1,14 +1,19 @@
 <template lang="pug">
-    .flex.flex-col.justify-center.items-center.h-full
-        h1.text-black Connect to your account
-        form.flex.flex-col.mt-10.w-full(@submit.prevent="login" class="md:w-1/3")
-            label.form-label.text-light(for="name") UserName
-            input.form-control#name(type="text" placeholder="Enter your name" v-model="name")
+    .container.mx-auto.py-12.px-4(class="md:px-8 lg:px-16")
+      .text-center.mb-8
+        h1.text-3xl.font-bold.text-gray-800.uppercase(class="md:text-5xl") Login
+        p.text-lg.text-gray-600.mt-4(class="md:text-xl")
+          | Welcome back! Please log in to access your account.
+        form.bg-white.shadow-md.p-6.space-y-6.max-w-2xl.mx-auto(@submit.prevent="login")
+          .space-y-4
+            label.block.text-sm.font-medium.text-gray-700(for="name") UserName
+            input#name.border.border-gray-300.w-full.p-3(class="focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your name" v-model="name")
             p.text-danger#name-error(v-if="errors.name") {{ errors.name }}
-            label.form-label.text-light(for="password") Password
-            input.form-control#email(type="password" placeholder="Enter your password" v-model="password" )
+
+            label.block.text-sm.font-medium.text-gray-700(for="password") Password
+            input#password.border.border-gray-300.w-full.p-3( class="focus:outline-none focus:ring-2 focus:ring-black" type="password" placeholder="Enter your password" v-model="password" )
             p.text-danger(v-if="errors.password") {{ errors.password }}
-            button.btn.btn-primary.mt-2(type="submit" :disabled="isSubmitting ") {{ isSubmitting ? 'Connecting...' : 'Login' }}
+          button.bg-zinc-900.text-white.font-semibold.py-2.px-4.w-full.transition(type="submit" :disabled="isSubmitting ") {{ isSubmitting ? 'Connecting...' : 'Login' }}
 </template>
 
 <script setup lang="ts">

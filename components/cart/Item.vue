@@ -1,5 +1,5 @@
 <template lang="pug">
-  .flex.flex-row.items-center.mb-1.gap-2.w-auto
+  .flex.flex-row.items-center.mb-1.gap-2
     img.object-contain.h-24(class="md:h-24 w-28" :src="product.image" :alt="`Image of ${product.title}`")
     .flex.flex-col.space-y-1(class="w-1/2")
       p.text-base.font-semibold {{ product.title }}
