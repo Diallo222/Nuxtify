@@ -16,7 +16,7 @@
                     Icon(name="mdi:account-box")
                 NuxtLink.text-black.transition(class="hover:scale-110" to="/favorites")
                     Icon(name="mdi:bookmark-multiple")
-                NuxtLink.text-black.transition(class="hover:scale-110")
+                NuxtLink.text-black.transition(class="hover:scale-110" to="/cart")
                     Icon(name="mdi:cart")
         .flex.gap-4.uppercase.text-black.text-lg
             NuxtLink.font-medium(to="/") Home

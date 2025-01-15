@@ -9,9 +9,13 @@
 <script setup lang="ts">
 import { useProductsStore } from "@/store/products";
 import { useFavoritesStore } from "~/store/favorites";
+import { useCartStore } from "~/store/cart";
 
 const productStore = useProductsStore();
 const favoritesStore = useFavoritesStore();
+const cartStore = useCartStore();
+
+console.log("CART", cartStore.basket);
 
 onMounted(() => {
   productStore.fetchProducts();

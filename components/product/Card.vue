@@ -13,14 +13,18 @@
                     Icon.text-yellow-400(name="mdi:star")
                     p.text-base.font-semibold.text-gray-600
                         | {{product.rating?.rate || 'N/A'}} <span>| {{ product.rating?.count || '0' }}</span>
-        button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110") Add to cart
+        button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(v-if="!isInCart" @click="addToCart(product)" class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110") Add to cart
+        button.w-full.border.border-black.p-2.transition.uppercase.text-base.text-white.bg-zinc-900.font-semibold(v-if="isInCart" @click="removeFromCart(product)" class="md:text-lg hover:bg-white hover:text-black hover:scale-110") Remove from cart
 </template>
 
 <script setup lang="ts">
 import { useFavoritesStore } from "~/store/favorites";
 import { useProductsStore } from "~/store/products";
+import { useCartStore } from "~/store/cart";
+
 const favoritesStore = useFavoritesStore();
 const productStore = useProductsStore();
+const cartStore = useCartStore();
 
 const router = useRouter();
 
@@ -34,6 +38,9 @@ const props = defineProps({
 const isFavorite = computed(() => {
   return favoritesStore.isFavorite(props.product);
 });
+const isInCart = computed(() => {
+  return cartStore.inCart(props.product.id);
+});
 
 const toggleFavorite = () => {
   favoritesStore.switchFavorite(props.product);
@@ -41,5 +48,11 @@ const toggleFavorite = () => {
 const handleclick = (product: any) => {
   productStore.selectedProduct = product;
   router.push(`/products/${product.id}`);
+};
+const addToCart = (product: any) => {
+  cartStore.addProduct(product, 1);
+};
+const removeFromCart = (product: any) => {
+  cartStore.removeProduct(product);
 };
 </script>
