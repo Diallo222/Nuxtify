@@ -16,5 +16,9 @@
 import { useProductsStore } from "~/store/products";
 const productStore = useProductsStore();
 
+definePageMeta({
+  layout: "admin",
+});
+
 const products = computed(() => productStore.allProducts);
 </script>

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/icon",
   ],
+  // plugins: ["~/plugins/toast.ts"],
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
   },

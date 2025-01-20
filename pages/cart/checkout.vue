@@ -43,7 +43,6 @@
   </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { useCartStore } from "~/store/cart";
 
 const cartStore = useCartStore();

@@ -26,8 +26,6 @@ export const useAuthStore = defineStore("auth", {
           },
         });
         this.user = data;
-        console.log("Login successful:", data);
-
         useCookie("authToken", {
           sameSite: "strict",
           secure: true,

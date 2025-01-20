@@ -6,10 +6,12 @@
           h2.text-lg.font-semibold.text-gray-800 {{ user.name }}
           p.text-gray-600.mt-1 Email: {{ user.email }}
           button.bg-red-600.text-white.font-semibold.py-2.px-4.rounded-lg.mt-4.transition(class="hover:bg-red-700") Remove User
-  </template>
+</template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+definePageMeta({
+  layout: "admin",
+});
 
 const users = ref([
   { id: 1, name: "Alice Johnson", email: "alice@example.com" },
