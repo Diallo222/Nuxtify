@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { useForm } from "vee-validate";
-
+import { useToast } from "vue-toastification";
 import * as yup from "yup";
 import { useAuthStore } from "@/store/auth";
 
@@ -43,10 +43,10 @@ const [password, passwordProps] = defineField("password");
 const login = handleSubmit(async () => {
   try {
     await authStore.login(values.name, values.password);
-    // toast.success("Login successfully.");
+    useToast().success("Login successfully.");
     resetForm();
   } catch (error) {
-    // toast.error("Login failed.");
+    useToast().error("Login failed.");
     console.error(error);
   }
 });

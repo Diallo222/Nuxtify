@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from "~/store/cart";
-
+import { useToast } from "vue-toastification";
 const cartStore = useCartStore();
 const cart = computed(() => cartStore.basket);
 const totalAmount = computed(() => cartStore.totalAmount());
@@ -65,12 +65,12 @@ const handlePayment = () => {
     payment.value.cvc
   ) {
     router.push("/cart/thank-you");
-    alert("Payment Successful! Thank you for your purchase.");
+    useToast().success("Payment Successful! Thank you for your purchase.");
 
     // Clear the cart after successful payment (Optional)
     cartStore.basket = [];
   } else {
-    alert("Please fill in all payment details.");
+    useToast().error("Please fill in all payment details.");
   }
 };
 </script>

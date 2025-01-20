@@ -12,16 +12,25 @@
                     | {{product.rating?.rate || 'N/A'}} <span>| {{ product.rating?.count || '0' }}</span>
             ProductQuantifier(@increment="increment" @decrement="decrement" v-model:quantity="quantity")
             .flex.flex-row.gap-4
-                button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110") Buy Now
-                button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110") Add to cart
+                button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(
+                  class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110"
+                  @click="buyNow"
+                  ) Buy Now
+                button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(
+                  class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110"
+                  @click="addToCart"
+                  ) Add to cart
 </template>
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { useProductsStore } from "~/store/products";
 import { useCartStore } from "~/store/cart";
 const productStore = useProductsStore();
 const cartStore = useCartStore();
 const product = productStore.selectedProduct;
 const quantity = ref(1);
+
+const router = useRouter();
 
 const increment = () => {
   quantity.value++;
@@ -30,7 +39,15 @@ const decrement = () => {
   if (quantity.value === 1) return;
   quantity.value--;
 };
+
+const buyNow = () => {
+  cartStore.addProduct(product, 0);
+  router.push("/cart/checkout");
+};
+
 const addToCart = () => {
   cartStore.addProduct(product, quantity.value);
+  useToast().success(` ${quantity.value} x Product added to cart!`);
+  quantity.value = 1;
 };
 </script>

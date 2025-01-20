@@ -20,7 +20,7 @@
   </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { useToast } from "vue-toastification";
 
 const form = ref({
   name: "",
@@ -30,11 +30,10 @@ const form = ref({
 
 const handleSubmit = () => {
   if (form.value.name && form.value.email && form.value.message) {
-    console.log("Form Submitted:", form.value);
-    alert("Thank you for contacting us!");
+    useToast().success("Thank you for contacting us!");
     form.value = { name: "", email: "", message: "" };
   } else {
-    alert("Please fill in all fields.");
+    useToast().error("Please fill in all fields.");
   }
 };
 </script>

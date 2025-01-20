@@ -1,8 +1,8 @@
 <template lang="pug">
     .p-2.relative.space-y-2(class="w-[10rem] md:w-[12rem] lg:w-[16rem]" )
-        button.p-2.flex.items-center.justify-center.rounded-full.absolute.top-2.right-2.transition(class="hover:bg-gray-200 hover:scale-110" :class="{ 'bg-black': isFavorite }, {'hover:bg-black': isFavorite}" @click="toggleFavorite" aria-label="Toggle favorite")
+        button.p-2.flex.items-center.justify-center.rounded-full.absolute.top-2.right-2.transition(class="hover:bg-gray-200 hover:scale-110" :class="{ 'bg-black hover:bg-black': isFavorite, 'hover:bg-gray-200': !isFavorite }" @click="toggleFavorite" aria-label="Toggle favorite")
             Icon.self-center(:class="isFavorite ? 'text-white' : 'text-black'" :name="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'")
-        img.w-full.object-contain.h-24(class="md:h-52" :src="product.image" alt="Card image cap" @click="handleclick(product)")
+        img.w-full.object-contain.h-24.cursor-pointer.transition.duration-1000(class="md:h-52 hover:scale-105" :src="product.image" alt="Card image cap" @click="handleclick(product)")
         .mt-2
             p.text-sm.font-semibold.text-gray-600.uppercase {{product.category}}
             .space-y-2
@@ -45,9 +45,9 @@ const isInCart = computed(() => {
 const toggleFavorite = () => {
   favoritesStore.switchFavorite(props.product);
 };
-const handleclick = (product: any) => {
-  productStore.selectedProduct = product;
-  router.push(`/products/${product.id}`);
+const handleclick = (selected: any) => {
+  productStore.selectedProduct = selected;
+  router.push(`/products/${selected.id}`);
 };
 const addToCart = (product: any) => {
   cartStore.addProduct(product, 1);
