@@ -8,6 +8,7 @@
                     Icon(name="mdi:twitter")
                 button.text-black.transition(class="hover:scale-110")
                     Icon(name="mdi:youtube")
+                
             NuxtLink.flex.items-center.font-extrabold(to="/")
                 Icon(name="mdi:shopping" size="1.5em")
                 p.text-black.uppercase.text-sm(class="md:text-xl") Nuxtify

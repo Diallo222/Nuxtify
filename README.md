@@ -1,75 +1,73 @@
-# Nuxt Minimal Starter
+# NUXTIFY
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern Nuxt.js E-commerce starter template. For detailed information, visit the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction).
 
-## Setup
+## Installation
 
-Make sure to install dependencies:
+1. **Clone the repository:**
 
 ```bash
-# npm
-npm install
+ git clone https://github.com/Diallo222/Nuxtify
+```
 
-# pnpm
-pnpm install
+2. **Navigate to the project directory:**
 
-# yarn
-yarn install
+```bash
+ cd Nuxtify
+```
 
-# bun
+3. **Install dependencies:**
+
+```bash
+# Install dependencies
 bun install
-```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
+# Start development server (http://localhost:3000)
 bun run dev
-```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
+# Build for production
 bun run build
-```
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
+# Preview production build
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### Alternative Package Managers
+
+While Bun is recommended for optimal performance, you can also use:
+
+- **npm**: Use `npm install`, `npm run dev`, etc.
+- **pnpm**: Use `pnpm install`, `pnpm dev`, etc.
+- **yarn**: Use `yarn install`, `yarn dev`, etc.
+
+## Tech Stack
+
+### Client Stack
+- **Vue.js** - Progressive JavaScript Framework
+- **Nuxt 3** - Vue.js Framework for SSR/SSG
+- **TypeScript** - JavaScript with syntax for types
+- **Pug** - Template engine for cleaner HTML
+- **Tailwind CSS** - Utility-first CSS framework
+
+### API
+
+**API:** [Fake Store API](https://fakestoreapi.com/)
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Make your changes.
+4. Commit your changes (git commit -am 'Add new feature').
+5. Push to the branch (git push origin feature-branch).
+6. Create a new Pull Request.
+
+## Authors
+
+- [@Almahady Diallo](https://github.com/Diallo222/)
+
+
+## Feedback
+
+If you have any feedback, please reach out to me at almahadydiallo@gmail.com
+

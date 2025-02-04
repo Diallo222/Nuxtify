@@ -15,8 +15,6 @@ const productStore = useProductsStore();
 const favoritesStore = useFavoritesStore();
 const cartStore = useCartStore();
 
-console.log("CART", cartStore.basket);
-
 onMounted(() => {
   productStore.fetchProducts();
   favoritesStore.loadFavorites();

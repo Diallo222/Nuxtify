@@ -2,8 +2,8 @@
     .flex.text-center.border-2.border-black.group(class="hover:cursor-pointer transition" @click="handleclick(category)")
         .flex.flex-col.h-full.justify-between.items-start
             //- p.text-black.text-xs.pl-2 {{ category }}
-            p.text-black.uppercase.font-semibold.pl-2 {{ category }}
-            button.text-black.text-xs.transition.duration-1000.uppercase.pl-2(class="md:text-lg group-hover:bg-black group-hover:text-white group-hover:p-1") Shop Now
+            p.text-black.uppercase.font-semibold.pl-1 {{ category }}
+            button.text-black.text-xs.transition.duration-1000.uppercase.px-1(class="md:text-lg group-hover:bg-black group-hover:text-white ") Shop Now
         NuxtImg.object-contain.w-48.h-48(class="group-hover:scale-110 transition duration-1000" :src="`/images/${category.toLowerCase()}.png`" :alt="category")
 </template>
 

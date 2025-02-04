@@ -29,7 +29,6 @@ export const useProductsStore = defineStore("products", {
       try {
         const data = await useApi("/products/categories", { method: "GET" });
         this.categories = data;
-        console.log("Products for category:", data);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       } finally {
