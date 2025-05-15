@@ -1,5 +1,8 @@
 # NUXTIFY
 
+Click on image to see the demo
+[![Cover](https://github.com/user-attachments/assets/1b600171-3231-4321-86b8-238f9e9867eb)](https://nuxtify-sigma.vercel.app/)
+
 A modern Nuxt.js E-commerce starter template. For detailed information, visit the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction).
 
 ## Installation
