@@ -6,10 +6,13 @@
       class="md:text-5xl"
       ) Top deals
       
-    .overflow-hidden.p-1.w-full.flex.flex-row.items-center.justify-between(
+    .overflow-hidden.p-1.w-full.flex.flex-row.items-center.justify-between.relative(
       class="md:p-6"
       )
-      button.bg-zinc-900.p-1.flex.items-center.justify-center.rounded-full.transition(class="md:p-2 hover:scale-110" @click="onPrevClick" aria-label="Prev")
+      button.bg-zinc-900.p-1.flex.items-center.justify-center.rounded-full.transition.shadow-md.z-10(
+        class="md:p-2 hover:scale-110 hover:bg-zinc-800" 
+        @click="onPrevClick" 
+        aria-label="Previous product")
         Icon(
           name="mdi:menu-left" 
           size="1.5em" 
@@ -19,7 +22,7 @@
         class="md:flex-row md:pl-6" 
         ref="scrollRef")
 
-          .text-left.space-y-2(class="md:w-1/2 md:space-y-12")
+          .text-left.space-y-2(class="md:w-1/2 md:space-y-8 md:pr-8")
             h2.text-lg.font-bold(
               class="md:text-3xl" 
               ref="titleRef"
@@ -27,20 +30,40 @@
             p.text-gray-700.text-sm.line-clamp-3(
               class="md:text-lg md:line-clamp-none" ref="descriptionRef"
               ) {{ currentProductData.description }}
-            .flex.flex-row.gap-4(ref="buttonsRef")
+            .flex.flex-row.gap-4.mt-4(ref="buttonsRef")
               button.bg-zinc-900.text-white.text-xs.py-2.px-4.shadow-sm.transition.uppercase(
                 class="md:text-lg hover:bg-white hover:text-black hover:border-2 hover:border-zinc-900"
-                @click="handleclick(currentProductData)"
+                @click="handleClick(currentProductData)"
                 ) Buy Now
               button.text-black.text-xs.border-2.border-zinc-900.py-2.px-4.shadow-sm.transition.uppercase(
                 class="md:text-lg hover:bg-zinc-900 hover:text-white"
-                @click="handleclick(currentProductData)"
+                @click="handleClick(currentProductData, true)"
                 ) Learn More
 
-          img.object-contain.h-40(:src="currentProductData.image" alt="Product Image" class="md:w-1/2 md:h-96" ref="imageRef")
-      button.bg-zinc-900.p-1.flex.items-center.justify-center.rounded-full.transition(class="md:p-2 hover:scale-110" @click="onNextClick" aria-label="Next")
+          .relative(class="md:w-1/2")
+            img.object-contain.h-40.transition-all.duration-300(
+              :src="currentProductData.image" 
+              alt="Product Image" 
+              class="md:h-96 hover:scale-105" 
+              ref="imageRef")
+            .absolute.top-0.left-0.p-2.bg-red-500.text-white.text-xs.font-bold.rounded-br-md(
+              v-if="currentProductData.discount"
+              ) -{{ currentProductData.discount }}%
+
+      button.bg-zinc-900.p-1.flex.items-center.justify-center.rounded-full.transition.shadow-md.z-10(
+        class="md:p-2 hover:scale-110 hover:bg-zinc-800" 
+        @click="onNextClick" 
+        aria-label="Next product")
         Icon(name="mdi:menu-right" size="1.5em" style="color: white")
-  </template>
+      
+    .flex.justify-center.mt-4.gap-2
+      .w-2.h-2.rounded-full.transition-all.duration-300.cursor-pointer(
+        v-for="(_, index) in products" 
+        :key="index"
+        :class="currentProduct === index ? 'bg-zinc-900 scale-125' : 'bg-zinc-300 hover:bg-zinc-400'"
+        @click="goToSlide(index)"
+      )
+</template>
 
 <script setup lang="ts">
 import gsap from "gsap";
@@ -59,9 +82,9 @@ const props = defineProps({
   },
 });
 
-const handleclick = (product: any) => {
-  productStore.selectedProduct = currentProductData;
-  router.push(`/products/${currentProductData.value.id}`);
+const handleClick = (product: any, isLearnMore: boolean = false) => {
+  productStore.selectedProduct = product;
+  router.push(`/products/${product.id}${isLearnMore ? "?info=true" : ""}`);
 };
 const currentProduct = ref(0);
 const currentProductData = computed(() => props.products[currentProduct.value]);
@@ -90,17 +113,18 @@ const animateTransition = (direction: "next" | "prev") => {
   tl.to([titleRef.value, descriptionRef.value, buttonsRef.value], {
     x: offset,
     opacity: 0,
-    duration: 0.5,
-    stagger: 0.1,
-    ease: "power1.inOut",
+    duration: 0.4,
+    stagger: 0.08,
+    ease: "power2.inOut",
   })
     .to(
       imageRef.value,
       {
         x: offset,
         opacity: 0,
-        duration: 0.5,
-        ease: "power1.inOut",
+        scale: 0.9,
+        duration: 0.4,
+        ease: "power2.inOut",
       },
       "<"
     )
@@ -115,26 +139,69 @@ const animateTransition = (direction: "next" | "prev") => {
       // Start animating the new content into view
       gsap.fromTo(
         [titleRef.value, descriptionRef.value, buttonsRef.value],
-        { x: -offset, opacity: 0 },
+        { x: -offset, opacity: 0, scale: 0.95 },
         {
           x: "0%",
           opacity: 1,
+          scale: 1,
           duration: 0.5,
-          stagger: 0.1,
-          ease: "power1.inOut",
+          stagger: 0.08,
+          ease: "power2.out",
         }
       );
       gsap.fromTo(
         imageRef.value,
-        { x: -offset, opacity: 0 },
+        { x: -offset, opacity: 0, scale: 0.9 },
         {
           x: "0%",
           opacity: 1,
+          scale: 1,
           duration: 0.5,
-          ease: "power1.inOut",
+          ease: "power2.out",
         }
       );
     });
+};
+
+const goToSlide = (index: number) => {
+  if (index === currentProduct.value) return;
+
+  const direction = index > currentProduct.value ? "next" : "prev";
+  const tl = gsap.timeline();
+
+  tl.to(
+    [titleRef.value, descriptionRef.value, buttonsRef.value, imageRef.value],
+    {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.3,
+      stagger: 0.05,
+      ease: "power2.inOut",
+    }
+  )
+    .call(() => {
+      currentProduct.value = index;
+    })
+    .add(() => {
+      gsap.fromTo(
+        [
+          titleRef.value,
+          descriptionRef.value,
+          buttonsRef.value,
+          imageRef.value,
+        ],
+        { opacity: 0, scale: 0.95 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: "power2.out",
+        }
+      );
+    });
+
+  resetTimer();
 };
 
 const onPrevClick = () => {
@@ -147,12 +214,30 @@ const onNextClick = () => {
   resetTimer();
 };
 
+// Handle keyboard navigation
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === "ArrowLeft") {
+    onPrevClick();
+  } else if (e.key === "ArrowRight") {
+    onNextClick();
+  }
+};
+
 onMounted(() => {
   resetTimer();
+  window.addEventListener("keydown", handleKeydown);
+
   onBeforeUnmount(() => {
     if (timer !== null) {
       clearInterval(timer);
     }
+    window.removeEventListener("keydown", handleKeydown);
   });
 });
 </script>
+
+<style scoped>
+.container {
+  position: relative;
+}
+</style>
