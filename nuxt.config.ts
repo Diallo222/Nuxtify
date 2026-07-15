@@ -1,9 +1,14 @@
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
+  compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
+  css: ["~/assets/css/tailwind.css"],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   modules: [
     "@pinia/nuxt",
-    "@nuxtjs/tailwindcss",
     [
       "@nuxtjs/google-fonts",
       { families: { "Barlow Condensed": ["400", "500", "600", "700", "800"] } },
@@ -11,10 +16,6 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/icon",
   ],
-  plugins: ["~/plugins/vue-toastification.js"],
-  tailwindcss: {
-    cssPath: "~/assets/css/tailwind.css",
-  },
   runtimeConfig: {
     public: {
       apiUrl: "https://fakestoreapi.com/",

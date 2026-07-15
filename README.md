@@ -22,35 +22,27 @@ A modern Nuxt.js E-commerce starter template. For detailed information, visit th
 3. **Install dependencies:**
 
 ```bash
-# Install dependencies
-bun install
+# Install dependencies (requires Node ^22.12 || ^24.11 || >=26)
+pnpm install
 
 # Start development server (http://localhost:3000)
-bun run dev
+pnpm run dev
 
 # Build for production
-bun run build
+pnpm run build
 
 # Preview production build
-bun run preview
+pnpm run preview
 ```
-
-### Alternative Package Managers
-
-While Bun is recommended for optimal performance, you can also use:
-
-- **npm**: Use `npm install`, `npm run dev`, etc.
-- **pnpm**: Use `pnpm install`, `pnpm dev`, etc.
-- **yarn**: Use `yarn install`, `yarn dev`, etc.
 
 ## Tech Stack
 
 ### Client Stack
 - **Vue.js** - Progressive JavaScript Framework
-- **Nuxt 3** - Vue.js Framework for SSR/SSG
+- **Nuxt 4** - Vue.js Framework for SSR/SSG
 - **TypeScript** - JavaScript with syntax for types
 - **Pug** - Template engine for cleaner HTML
-- **Tailwind CSS** - Utility-first CSS framework
+- **Tailwind CSS v4** - Utility-first CSS framework
 
 ### API
 
@@ -73,4 +65,3 @@ While Bun is recommended for optimal performance, you can also use:
 ## Feedback
 
 If you have any feedback, please reach out to me at almahadydiallo@gmail.com
-

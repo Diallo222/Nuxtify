@@ -2,6 +2,9 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "^22.12.0 || ^24.11.0 || >=26.0.0"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -10,31 +13,29 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/icon": "1.10.3",
-    "@nuxt/image": "1.9.0",
-    "@nuxtjs/google-fonts": "3.2.0",
-    "@pinia/nuxt": "^0.9.0",
-    "gsap": "^3.12.5",
-    "js-cookie": "^3.0.5",
-    "nuxt": "^3.15.1",
-    "pinia": "^2.3.0",
-    "vee-validate": "^4.15.0",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vue-toastification": "2.0.0-rc.5",
-    "yup": "^1.6.1"
+    "@nuxt/icon": "^2.3.1",
+    "@nuxt/image": "^2.0.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@pinia/nuxt": "^1.0.0",
+    "gsap": "^3.15.0",
+    "nuxt": "^4.4.8",
+    "pinia": "^4.0.2",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.35",
+    "vue-sonner": "^2.0.9",
+    "yup": "^1.7.1"
   },
-  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
+  "packageManager": "pnpm@11.13.0+sha512.88d94724d8f2e6c186744a5584c6e59ecac869ec7ba15e9cb4cd628e8dc7066820b2481d8ee3b51ea8da323a7378068aa58c556a3720d32b7c20a051d088363a",
   "devDependencies": {
-    "@iconify-json/mdi": "^1.2.2",
-    "@nuxt/test-utils": "^3.15.1",
-    "@nuxtjs/tailwindcss": "6.12.2",
-    "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^16.3.0",
-    "playwright-core": "^1.49.1",
-    "pug": "^3.0.3",
-    "pug-plain-loader": "^1.1.0",
-    "pug-plugin": "^5.3.0",
-    "vitest": "^2.1.8"
+    "@iconify-json/mdi": "^1.2.3",
+    "@nuxt/test-utils": "^4.0.3",
+    "@tailwindcss/vite": "^4.1.12",
+    "@vue/language-plugin-pug": "^3.3.7",
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.10.6",
+    "playwright-core": "^1.61.1",
+    "pug": "^3.0.4",
+    "tailwindcss": "^4.1.12",
+    "vitest": "^4.1.10"
   }
 }
