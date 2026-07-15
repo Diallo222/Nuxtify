@@ -52,7 +52,11 @@ const login = handleSubmit(async () => {
     await authStore.login(values.name, values.password);
     toast.success("Login successful.");
     resetForm();
-    navigateTo("/");
+    const route = useRoute();
+    const redirect = String(route.query.redirect || "");
+    const safe =
+      redirect.startsWith("/") && !redirect.startsWith("//") ? redirect : "/";
+    navigateTo(safe);
   } catch (error) {
     toast.error("Login failed.");
     console.error(error);

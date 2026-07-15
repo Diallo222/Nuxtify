@@ -1,10 +1,13 @@
 import { useAuthStore } from "~/stores/auth";
-export default defineNuxtRouteMiddleware((to, from) => {
+
+export default defineNuxtRouteMiddleware((to) => {
   const authStore = useAuthStore();
-  if (
-    !authStore.isAuthenticated &&
-    (to.path.startsWith("/admin") || to.path.startsWith("/cart/checkout"))
-  ) {
-    return navigateTo("/login");
+  if (authStore.isAuthenticated) return;
+
+  if (to.path.startsWith("/admin") || to.path.startsWith("/cart/checkout")) {
+    return navigateTo({
+      path: "/login",
+      query: { redirect: to.fullPath },
+    });
   }
 });
