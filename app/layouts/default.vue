@@ -3,19 +3,14 @@ import { Toaster } from "vue-sonner";
 </script>
 
 <template lang="pug">
-    .w-screen.h-screen.overflow-y-scroll.px-2.pb-4.bg-white(class="md:px-16 lg:px-44")
-        ClientOnly
-            Toaster(position="top-center" :duration="5000")
-        NavBar
-        NuxtPage
+  .min-h-screen.bg-ink.text-paper
+    ClientOnly
+      CustomPreloader
+      AppCursor
+      Toaster(position="top-center" :duration="4000" theme="dark")
+    NavBar
+    CartDrawer
+    main.pt-20
+      slot
+    SiteFooter
 </template>
-
-<style>
-body {
-  font-family: "Barlow Condensed", serif;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-</style>
