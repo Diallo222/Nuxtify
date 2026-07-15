@@ -1,32 +1,80 @@
 <template lang="pug">
-  article.px-5.py-16.max-w-3xl.mx-auto(class="md:px-10")
+  article.px-5.py-16.max-w-3xl.mx-auto(class="md:px-10" v-if="article")
     NuxtLink.text-xs.uppercase.tracking-widest.text-ash.transition-colors(
       to="/blog"
       class="hover:text-accent"
     ) ← Journal
-    p.text-accent.text-xs.uppercase.mt-8(class="tracking-[0.3em]") {{ article.date }}
+    .flex.flex-wrap.items-center.gap-3.mt-8
+      p.text-accent.text-xs.uppercase(class="tracking-[0.3em]") {{ article.date }}
+      span.text-ash(class="text-[10px]") ·
+      span.text-ash.uppercase.tracking-widest(
+        class="text-[10px]"
+        v-for="tag in article.tags"
+        :key="tag"
+      ) {{ tag }}
     h1.font-display.font-extrabold.uppercase.tracking-tighter.text-4xl.mt-4.leading-none(
       class="md:text-6xl"
     ) {{ article.title }}
+    p.text-paper.mt-6.text-lg.leading-relaxed.max-w-2xl {{ article.excerpt }}
+    .mt-10.overflow-hidden.bg-ink-muted(class="aspect-[16/10]")
+      NuxtImg.w-full.h-full.object-cover(
+        :src="article.image"
+        :alt="article.title"
+      )
     .mt-12.space-y-6.text-ash.leading-relaxed.text-base(class="md:text-lg")
       p(v-for="(p, i) in paragraphs" :key="i") {{ p }}
+    .mt-16.pt-10.border-t.border-white-10
+      p.text-xs.uppercase.tracking-widest.text-ash More from the journal
+      .mt-6.flex.flex-col.gap-4
+        NuxtLink.font-display.font-bold.transition-colors(
+          v-for="related in relatedPosts"
+          :key="related.slug"
+          :to="`/blog/${related.slug}`"
+          class="hover:text-accent"
+        ) {{ related.title }} →
+      Magnetic.mt-10.inline-block(tag="div")
+        NuxtLink.bg-accent.text-ink.font-display.font-bold.uppercase.tracking-wide.px-8.py-4(
+          to="/blog"
+          data-cursor="hover"
+        ) All essays
+  .px-5.py-32.text-center(v-else)
+    p.font-display.font-bold.text-3xl Piece not found
+    NuxtLink.mt-6.inline-block.text-accent(to="/blog") ← Back to journal
 </template>
 
 <script setup lang="ts">
-const article = {
-  title: "Retail as theater",
-  date: "January 10, 2026",
-  content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+import { getJournalPost, getJournalPosts } from "~/data/journal";
 
-Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Aliquam erat volutpat. Ut at ullamcorper libero.
+const route = useRoute();
+const slug = computed(() => String(route.params.post));
 
-Quisque fermentum, eros non lobortis tincidunt, turpis justo aliquam arcu, vel efficitur nunc nisi nec dolor. In tristique felis a purus malesuada, quis convallis velit elementum.`,
-};
+const article = computed(() => getJournalPost(slug.value));
 
-const paragraphs = computed(() =>
-  article.content
+const paragraphs = computed(() => {
+  if (!article.value) return [];
+  return article.value.content
     .split(/\n\n+/)
     .map((p) => p.trim())
-    .filter(Boolean)
+    .filter(Boolean);
+});
+
+const relatedPosts = computed(() =>
+  getJournalPosts()
+    .filter((p) => p.slug !== slug.value)
+    .slice(0, 3)
 );
+
+useSeoMeta({
+  title: () =>
+    article.value
+      ? `${article.value.title} — Nuxtify Journal`
+      : "Piece not found — Nuxtify",
+  description: () => article.value?.excerpt ?? "Journal essay not found.",
+});
 </script>
+
+<style scoped>
+.border-white-10 {
+  border-color: color-mix(in srgb, white 10%, transparent);
+}
+</style>

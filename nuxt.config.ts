@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
   ],
   image: {
-    domains: ["fakestoreapi.com"],
+    domains: ["fakestoreapi.com", "images.unsplash.com"],
   },
   app: {
     pageTransition: { name: "page-wipe", mode: "out-in" },
