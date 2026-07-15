@@ -1,7 +1,7 @@
 <template lang="pug">
-  header.fixed.top-0.left-0.right-0.z-50.px-5.py-4.transition-colors.duration-300(
+  header.fixed.top-0.left-0.right-0.px-5.py-4.transition-colors.duration-300(
     class="md:px-10"
-    :class="scrolled ? 'bg-ink-70 backdrop-blur-md border-b border-white-10' : 'bg-transparent'"
+    :class="headerClass"
   )
     .flex.items-center.justify-between.gap-4
       Magnetic(tag="div" :strength="0.2")
@@ -11,13 +11,14 @@
           @click="onMenuToggle"
           data-cursor="hover"
         )
-          span {{ ui.menuOpen ? 'Close' : 'Menu' }}
+          span {{ menuVisible ? 'Close' : 'Menu' }}
 
       Magnetic(tag="div" :strength="0.25")
         NuxtLink.font-display.font-extrabold.uppercase.tracking-tighter.text-2xl.text-paper(
           to="/"
           class="md:text-3xl hover:text-accent"
           data-cursor="hover"
+          @click="menuVisible && closeMenu()"
         ) Nuxtify
 
       .flex.items-center.gap-4(class="md:gap-6")
@@ -39,24 +40,24 @@
           Icon(name="mdi:account-outline" size="1.35em")
 
   Teleport(to="body")
-    .fixed.inset-0.bg-ink.pointer-events-none.opacity-0(
+    .fixed.inset-0.bg-ink(
       class="z-[80]"
       ref="overlay"
-      :class="{ 'pointer-events-auto': menuVisible }"
+      :style="{ pointerEvents: menuVisible ? 'auto' : 'none' }"
       v-show="menuVisible"
     )
-      .absolute.inset-0.px-8.py-24.flex.flex-col.justify-center(class="md:px-16")
+      .relative.z-10.h-full.px-8.py-24.flex.flex-col.justify-center(class="md:px-16")
         nav.flex.flex-col.gap-2(class="md:gap-4")
           NuxtLink.menu-link.font-display.font-extrabold.uppercase.tracking-tighter.text-5xl.text-paper.overflow-hidden(
             v-for="link in links"
             :key="link.to"
             :to="link.to"
-            class="md:text-7xl lg:text-8xl hover:text-accent"
+            class="md:text-7xl lg:text-8xl hover:text-accent relative z-10"
             data-cursor="hover"
             @click="closeMenu"
           )
             span.inline-block(data-menu-item) {{ link.label }}
-        .mt-16.flex.flex-wrap.gap-6.text-xs.uppercase.tracking-widest.text-ash(data-menu-meta)
+        .mt-16.flex.flex-wrap.gap-6.text-xs.uppercase.tracking-widest.text-ash.relative.z-10(data-menu-meta)
           a(href="https://github.com" target="_blank" rel="noopener" class="hover:text-accent") GitHub
           a(href="https://twitter.com" target="_blank" rel="noopener" class="hover:text-accent") X
           NuxtLink(to="/admin" class="hover:text-accent" @click="closeMenu") Admin
@@ -78,6 +79,14 @@ const reduced = useReducedMotion();
 const count = computed(() =>
   cart.basket.reduce((acc, item) => acc + (item.quantity || 0), 0)
 );
+
+const headerClass = computed(() => {
+  const bg = scrolled.value
+    ? "bg-ink-70 backdrop-blur-md border-b border-white-10"
+    : "bg-transparent";
+  const z = menuVisible.value ? "z-[100]" : "z-50";
+  return `${bg} ${z}`;
+});
 
 const links = [
   { label: "Home", to: "/" },
