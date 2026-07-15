@@ -1,9 +1,12 @@
 <template lang="pug">
   div
-    h1.font-display.font-extrabold.uppercase.tracking-tighter.text-4xl.mb-2(
-      class="md:text-5xl"
-    ) Admin
-    p.text-ash.mb-12.text-sm Control room for the kinetic store.
+    AdminPageHeader(
+      eyebrow="Control room"
+      title="Overview"
+      subtitle="Demo control room — mutations are local toasts."
+    )
+    CustomLoader(:loading="loading && !products.length")
+    AdminStatStrip(:stats="stats")
     .grid.gap-4(class="md:grid-cols-3")
       NuxtLink.group.border.border-white-10.p-6.transition(
         v-for="card in cards"
@@ -21,28 +24,61 @@
 </template>
 
 <script setup lang="ts">
+import { useProductsStore } from "~/stores/products";
+
 definePageMeta({ layout: "admin" });
+
+const productStore = useProductsStore();
+const products = computed(() => productStore.allProducts);
+const loading = computed(() => productStore.loading);
+
+const stats = computed(() => [
+  {
+    label: "Products",
+    value: products.value.length || "—",
+    hint: "Fake Store catalog",
+  },
+  {
+    label: "Revenue",
+    value: "$12.4k",
+    hint: "Demo MTD",
+  },
+  {
+    label: "Open orders",
+    value: 3,
+    hint: "Awaiting ship",
+  },
+  {
+    label: "Users",
+    value: 5,
+    hint: "Demo accounts",
+  },
+]);
 
 const cards = [
   {
     kicker: "01",
     title: "Products",
-    body: "View, add, edit, or delete catalog pieces.",
+    body: "Search, filter, and stage demo catalog edits.",
     to: "/admin/products",
   },
   {
     kicker: "02",
     title: "Orders",
-    body: "Review and process customer orders.",
+    body: "Track demo fulfillments and mark shipments.",
     to: "/admin/orders",
   },
   {
     kicker: "03",
     title: "Users",
-    body: "Inspect accounts and remove access.",
+    body: "Inspect roles and remove demo access.",
     to: "/admin/users",
   },
 ];
+
+onMounted(() => {
+  if (!productStore.products.length) productStore.fetchProducts();
+});
 </script>
 
 <style scoped>
