@@ -5,6 +5,8 @@ Click on image to see the demo
 
 A modern Nuxt.js E-commerce starter template. For detailed information, visit the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction).
 
+**Kinetic concept store redesign:** Syne + DM Sans, Lenis smooth scroll, GSAP motion, dark ink / chartreuse accent system — documented in [`DESIGN.md`](./DESIGN.md).
+
 ## Installation
 
 1. **Clone the repository:**
@@ -43,6 +45,8 @@ pnpm run preview
 - **TypeScript** - JavaScript with syntax for types
 - **Pug** - Template engine for cleaner HTML
 - **Tailwind CSS v4** - Utility-first CSS framework
+- **GSAP + Lenis** - Page transitions, scroll reveals, smooth scroll
+- **Pinia** - Client state (cart, favorites, auth)
 
 ### API
 
