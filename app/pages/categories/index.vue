@@ -1,30 +1,24 @@
 <template lang="pug">
-    .container.flex.flex-col.justify-center.items-center
-        h1 Categories
-        .flex.flex-wrap.justify-center.gap-4
-            .space-y-1.text-center(class="hover:cursor-pointer hover:scale-110 transition" v-for="category in categories" :key="category" @click="handleclick(category)")
-                NuxtImg.object-contain.w-48.h-48(:src="`/images/${category.toLowerCase()}.png`" :alt="category")
-                p.text-black {{ category }}
-        .flex.justify-center(v-if="loading")
-            p.animate-pulse Loading...
-    </template>
+  .px-5.py-16(class="md:px-10 lg:px-16")
+    .mb-12
+      p.text-accent.text-xs.uppercase(class="tracking-[0.3em]") Explore
+      h1.font-display.font-extrabold.uppercase.tracking-tighter.text-5xl.mt-3(
+        class="md:text-7xl"
+      ) Categories
+      p.text-ash.mt-4.max-w-md Four collections. One kinetic floor.
+    CustomLoader(:loading="loading")
+    .grid.grid-cols-1.gap-4(class="md:grid-cols-2 md:gap-6" v-if="!loading")
+      CategoryCard(v-for="cat in categories" :key="cat" :category="cat")
+</template>
 
 <script setup lang="ts">
 import { useProductsStore } from "~/stores/products";
-import { computed, onMounted } from "vue";
-const router = useRouter();
 
-const handleclick = (category: string) => {
-  productStore.fetchCategoryProducts(category);
-  router.push(`/categories/${category}`);
-};
-
-const productStore = useProductsStore();
+const store = useProductsStore();
+const categories = computed(() => store.allCategories);
+const loading = computed(() => store.catLoading);
 
 onMounted(() => {
-  productStore.fetchCategories();
+  if (!store.categories.length) store.fetchCategories();
 });
-
-const categories = computed(() => productStore.categories);
-const loading = computed(() => productStore.catLoading);
 </script>

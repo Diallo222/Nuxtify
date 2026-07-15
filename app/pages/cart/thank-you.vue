@@ -1,17 +1,33 @@
 <template lang="pug">
-    .container.mx-auto.py-12.px-4(class="md:px-8 lg:px-16 text-center")
-      .text-center.mb-8
-        h1.text-3xl.font-bold.text-gray-800(class="md:text-5xl") Thank You for Your Purchase!
-        p.text-lg.text-gray-600.mt-4(class="md:text-xl")
-          | We appreciate your trust in us. Your order has been successfully placed.
-      .mt-8
-        Icon(name="mdi:party-popper" class="text-8xl text-black")
-      .mt-8
-        p.text-base.text-gray-700
-          | You will receive a confirmation email shortly with the details of your order.
-      .mt-12
-        nuxt-link(to="/")
-          button.bg-zinc-900.text-white.font-semibold.py-2.px-4.rounded-lg.transition Return to Home
-  </template>
+  .px-5.py-32.text-center.flex.flex-col.items-center.justify-center(
+    class="min-h-[70vh] md:px-10"
+    ref="root"
+  )
+    p.text-accent.text-xs.uppercase.mb-4(class="tracking-[0.3em]") Curtain call
+    h1.font-display.font-extrabold.uppercase.tracking-tighter.text-5xl.leading-none(
+      class="md:text-8xl"
+      ref="title"
+    ) Thank you
+    p.text-ash.mt-6.max-w-md Your order is staged. Confirmation is theatrical — this demo sends no email.
+    Magnetic.mt-12(tag="div")
+      NuxtLink.bg-accent.text-ink.font-display.font-bold.uppercase.px-8.py-4(
+        to="/"
+        data-cursor="hover"
+      ) Return home
+</template>
 
-<script setup></script>
+<script setup lang="ts">
+import gsap from "gsap";
+
+const title = ref<HTMLElement | null>(null);
+const reduced = useReducedMotion();
+
+onMounted(() => {
+  if (reduced.value || !title.value) return;
+  gsap.fromTo(
+    title.value,
+    { y: 60, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1, ease: "power4.out" }
+  );
+});
+</script>

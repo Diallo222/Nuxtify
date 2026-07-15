@@ -1,55 +1,46 @@
 <template lang="pug">
-    .container.mx-auto.pb-12.px-4(class="md:px-8 lg:px-16")
-      .text-center.mb-8
-        h1.text-3xl.font-bold.text-gray-800.uppercase(class="md:text-5xl") Checkout
-        p.text-lg.text-gray-600.mt-4(class="md:text-xl") Complete your purchase below.
-  
-      .grid.grid-cols-1.gap-8(class="md:grid-cols-3")
-        // Product Summary
-        .bg-white.shadow-md.p-6.space-y-6(class="md:col-span-2")
-          h2.text-xl.font-semibold.text-gray-800 Order Summary
-          ul
-            li.border-b.py-4.flex.justify-between.items-center(v-for="item in cart" :key="item.id")
-              .text-gray-700
-                p.font-medium {{ item.title }}
-                p.text-sm.text-gray-500 Quantity: {{ item.quantity }}
-              p.font-semibold.text-gray-800 ${{ (item.price * item.quantity).toFixed(2) }}
-  
-          .flex.justify-between.items-center.mt-4
-            p.text-lg.font-semibold.text-gray-800 Total:
-            p.text-lg.font-semibold.text-zinc-900 ${{ totalAmount.toFixed(2) }}
-  
-        // Payment Form
-        .bg-white.shadow-md.px-6.py-4.space-y-6
-          h2.text-xl.font-semibold.text-gray-800 Payment Details
-          form(@submit.prevent="handlePayment")
-            .space-y-4
-              label.block.text-sm.font-medium.text-gray-700(for="name") Name on Card
-              input#name.border.border-gray-300.w-full.p-3(class="focus:outline-none focus:ring-2 focus:ring-black" type="text" placeholder="Cardholder Name" v-model="payment.name")
-  
-              label.block.text-sm.font-medium.text-gray-700(for="card") Card Number
-              input#card.border.border-gray-300.w-full.p-3(class="focus:outline-none focus:ring-2 focus:ring-black" type="number" placeholder="1234 5678 9012 3456" v-model="payment.cardNumber")
-  
-              .grid.grid-cols-2.gap-4
-                .space-y-4
-                  label.block.text-sm.font-medium.text-gray-700(for="expiry") Expiry Date
-                  input#expiry.border.border-gray-300.w-full.p-3( class="focus:outline-none focus:ring-2 focus:ring-black" type="text" placeholder="MM/YY" v-model="payment.expiry")
-  
-                .space-y-4
-                  label.block.text-sm.font-medium.text-gray-700(for="cvc") CVC
-                  input#cvc.border.border-gray-300.w-full.p-3(class="focus:outline-none focus:ring-2 focus:ring-black" type="number" placeholder="123" v-model="payment.cvc")
-  
-            button.bg-zinc-900.text-white.font-semibold.py-2.px-4.w-full.transition.mt-4(type="submit") Pay ${{ totalAmount.toFixed(2) }}
-  </template>
+  .px-5.py-16(class="md:px-10 lg:px-16")
+    h1.font-display.font-extrabold.uppercase.tracking-tighter.text-5xl.mb-4(
+      class="md:text-7xl"
+    ) Checkout
+    p.text-ash.mb-12 Complete the scene — demo payment only.
+    .grid.gap-12(class="lg:grid-cols-12")
+      .space-y-4(class="lg:col-span-7")
+        h2.font-display.font-bold.uppercase.tracking-tight.text-xl Order
+        .border-b.border-white-10.py-4.flex.justify-between.gap-4(
+          v-for="item in cart"
+          :key="item.id"
+        )
+          div
+            p.font-medium {{ item.title }}
+            p.text-ash.text-sm Qty {{ item.quantity }}
+          p.font-display.font-bold ${{ ((item.price || 0) * (item.quantity || 1)).toFixed(2) }}
+        .flex.justify-between.pt-4
+          span.font-display.font-bold Total
+          span.font-display.font-bold.text-2xl ${{ totalAmount.toFixed(2) }}
+      form.space-y-6(class="lg:col-span-5" @submit.prevent="handlePayment")
+        h2.font-display.font-bold.uppercase.tracking-tight.text-xl Payment
+        CustomInput(v-model="payment.name" label="Name on card" placeholder="Cardholder name")
+        CustomInput(v-model="payment.cardNumber" label="Card number" placeholder="4242 4242 4242 4242")
+        .grid.grid-cols-2.gap-4
+          CustomInput(v-model="payment.expiry" label="Expiry" placeholder="MM/YY")
+          CustomInput(v-model="payment.cvc" label="CVC" placeholder="123")
+        Magnetic(tag="div")
+          button.w-full.bg-accent.text-ink.font-display.font-bold.uppercase.tracking-wide.py-4(
+            type="submit"
+            data-cursor="hover"
+          ) Pay ${{ totalAmount.toFixed(2) }}
+</template>
 
 <script setup lang="ts">
-import { useCartStore } from "~/stores/cart";
 import { toast } from "vue-sonner";
+import { useCartStore } from "~/stores/cart";
+
 const cartStore = useCartStore();
+const router = useRouter();
 const cart = computed(() => cartStore.basket);
 const totalAmount = computed(() => cartStore.totalAmount());
 
-const router = useRouter();
 const payment = ref({
   name: "",
   cardNumber: "",
@@ -64,13 +55,17 @@ const handlePayment = () => {
     payment.value.expiry &&
     payment.value.cvc
   ) {
-    router.push("/cart/thank-you");
-    toast.success("Payment Successful! Thank you for your purchase.");
-
-    // Clear the cart after successful payment (Optional)
     cartStore.basket = [];
+    toast.success("Payment successful");
+    router.push("/cart/thank-you");
   } else {
     toast.error("Please fill in all payment details.");
   }
 };
 </script>
+
+<style scoped>
+.border-white-10 {
+  border-color: color-mix(in srgb, white 10%, transparent);
+}
+</style>
