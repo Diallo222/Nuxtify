@@ -1,20 +1,43 @@
 <template lang="pug">
-    .container.mx-auto.py-12.px-4(class="md:px-8 lg:px-16")
-      h1.text-2xl.font-bold.text-gray-800.mb-8(class="md:text-4xl") Manage Users
-      .grid.grid-cols-1.gap-8
-        .p-4.bg-white.shadow-md.rounded-lg(v-for="user in users" :key="user.id")
-          h2.text-lg.font-semibold.text-gray-800 {{ user.name }}
-          p.text-gray-600.mt-1 Email: {{ user.email }}
-          button.bg-red-600.text-white.font-semibold.py-2.px-4.rounded-lg.mt-4.transition(class="hover:bg-red-700") Remove User
+  div
+    h1.font-display.font-extrabold.uppercase.tracking-tighter.text-4xl.mb-2 Users
+    p.text-ash.text-sm.mb-10 Demo accounts for the control room.
+    .border.border-white-10.divide-y.divide-white-10
+      .flex.flex-wrap.items-center.justify-between.gap-4.px-4.py-5(
+        v-for="user in users"
+        :key="user.id"
+      )
+        div
+          p.font-display.font-bold {{ user.name }}
+          p.text-ash.text-sm {{ user.email }}
+        button.border.border-white-20.px-3.py-2.text-xs.uppercase.tracking-widest.text-red-400.transition(
+          type="button"
+          class="hover:border-red-400"
+          data-cursor="hover"
+          @click="toast.message('Demo remove')"
+        ) Remove
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: "admin",
-});
+import { toast } from "vue-sonner";
+
+definePageMeta({ layout: "admin" });
 
 const users = ref([
   { id: 1, name: "Alice Johnson", email: "alice@example.com" },
   { id: 2, name: "Bob Smith", email: "bob@example.com" },
+  { id: 3, name: "John Doe", email: "johnd@example.com" },
 ]);
 </script>
+
+<style scoped>
+.border-white-10 {
+  border-color: color-mix(in srgb, white 10%, transparent);
+}
+.border-white-20 {
+  border-color: color-mix(in srgb, white 20%, transparent);
+}
+.divide-white-10 > :not([hidden]) ~ :not([hidden]) {
+  border-color: color-mix(in srgb, white 10%, transparent);
+}
+</style>
