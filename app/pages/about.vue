@@ -1,29 +1,36 @@
 <template lang="pug">
-    .container.mx-auto.py-12.px-4(class="md:px-8 lg:px-16")
-      .text-center.mb-8
-        h1.text-3xl.font-bold.text-gray-800.uppercase(class="md:text-5xl") About Nuxtify
-        p.text-lg.text-gray-600.mt-4(class="md:text-xl") 
-          | Your one-stop shop for high-quality products delivered with excellence.
-  
-      .grid.grid-cols-1.gap-8(class="md:grid-cols-2 lg:grid-cols-3")
-        .bg-white.shadow-md.p-6.flex.flex-col.items-center
-          Icon(name="mdi:shopping-outline" class="text-4xl text-black")
-          h2.text-xl.font-semibold.text-gray-700.mt-4 Our Mission
-          p.text-gray-600.mt-2.text-center 
-            | At Nuxtify, our mission is to provide a seamless shopping experience 
-            | with a curated selection of products tailored to your needs.
-  
-        .bg-white.shadow-md.p-6.flex.flex-col.items-center
-          Icon(name="mdi:truck-delivery-outline" class="text-4xl text-black")
-          h2.text-xl.font-semibold.text-gray-700.mt-4 Fast Delivery
-          p.text-gray-600.mt-2.text-center 
-            | Enjoy fast, reliable delivery services to your doorstep, no matter where you are.
-  
-        .bg-white.shadow-md.p-6.flex.flex-col.items-center
-          Icon(name="mdi:account-group-outline" class="text-4xl text-black")
-          h2.text-xl.font-semibold.text-gray-700.mt-4 Customer Support
-          p.text-gray-600.mt-2.text-center 
-            | Our team is here to assist you 24/7 with any inquiries or support you may need.
-  </template>
+  .px-5.py-16(class="md:px-10 lg:px-16")
+    .max-w-5xl
+      p.text-accent.text-xs.uppercase(class="tracking-[0.3em]") About
+      h1.font-display.font-extrabold.uppercase.tracking-tighter.leading-none.mt-4(
+        class="text-[14vw] md:text-8xl"
+      ) NUXTIFY
+      Reveal
+        p.text-2xl.text-paper.mt-10.max-w-2xl.leading-snug(class="md:text-3xl")
+          | Not a template — a kinetic concept store where fashion, jewelry, and electronics share one stage.
+    .grid.gap-16.mt-24(class="md:grid-cols-3")
+      Reveal(v-for="(block, i) in blocks" :key="block.title" :delay="i * 0.1")
+        p.text-xs.uppercase.tracking-widest.text-accent {{ block.kicker }}
+        h2.font-display.font-bold.uppercase.tracking-tight.text-2xl.mt-3 {{ block.title }}
+        p.text-ash.mt-4.leading-relaxed {{ block.body }}
+</template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const blocks = [
+  {
+    kicker: "01",
+    title: "Mission",
+    body: "Stage premium retail as theater — bold type, full-bleed imagery, motion that feels intentional.",
+  },
+  {
+    kicker: "02",
+    title: "Speed",
+    body: "Signal-fast delivery as a promise of the brand — always on cue, never waiting in the wings.",
+  },
+  {
+    kicker: "03",
+    title: "Support",
+    body: "Human replies that treat every shopper like an opening-night guest.",
+  },
+];
+</script>

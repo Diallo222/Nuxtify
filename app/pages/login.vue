@@ -1,19 +1,25 @@
 <template lang="pug">
-    .container.mx-auto.py-12.px-4(class="md:px-8 lg:px-16")
-      .text-center.mb-8
-        h1.text-3xl.font-bold.text-gray-800.uppercase(class="md:text-5xl") Login
-        p.text-lg.text-gray-600.mt-4(class="md:text-xl")
-          | Welcome back! Please log in to access your account.
-        form.bg-white.shadow-md.p-6.space-y-6.max-w-2xl.mx-auto(@submit.prevent="login")
-          .space-y-4
-            label.block.text-sm.text-left.font-medium.text-gray-700(for="name") UserName
-            input#name.border.border-gray-300.w-full.p-3(class="focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your name" v-model="name")
-            p.text-danger#name-error(v-if="errors.name") {{ errors.name }}
-
-            label.block.text-sm.text-left.font-medium.text-gray-700(for="password") Password
-            input#password.border.border-gray-300.w-full.p-3( class="focus:outline-none focus:ring-2 focus:ring-black" type="password" placeholder="Enter your password" v-model="password" )
-            p.text-danger(v-if="errors.password") {{ errors.password }}
-          button.bg-zinc-900.text-white.font-semibold.py-2.px-4.w-full.transition(class="hover:scale-105" type="submit" :disabled="isSubmitting ") {{ isSubmitting ? 'Connecting...' : 'Login' }}
+  .px-5.py-16.flex.items-center.justify-center(class="min-h-[70vh] md:px-10")
+    .w-full.max-w-md.space-y-10
+      div
+        p.text-accent.text-xs.uppercase(class="tracking-[0.3em]") Account
+        h1.font-display.font-extrabold.uppercase.tracking-tighter.text-5xl.mt-3 Login
+        p.text-ash.mt-3.text-sm Demo credentials are prefilled (Fake Store API).
+      form.space-y-8(@submit.prevent="login")
+        CustomInput(v-model="name" label="Username" placeholder="johnd")
+        p.text-red-400.text-xs(v-if="errors.name") {{ errors.name }}
+        CustomInput(v-model="password" label="Password" type="password" placeholder="••••••••")
+        p.text-red-400.text-xs(v-if="errors.password") {{ errors.password }}
+        Magnetic(tag="div")
+          button.w-full.bg-accent.text-ink.font-display.font-bold.uppercase.tracking-wide.py-4(
+            type="submit"
+            :disabled="isSubmitting"
+            data-cursor="hover"
+          ) {{ isSubmitting ? 'Connecting…' : 'Login' }}
+      p.text-ash.text-sm
+        | No account?
+        |
+        NuxtLink.text-paper.underline.underline-offset-4(to="/register" class="hover:text-accent") Register
 </template>
 
 <script setup lang="ts">
@@ -37,19 +43,19 @@ const { errors, defineField, resetForm, handleSubmit, isSubmitting, values } =
       password: "m38rmF$",
     },
   });
-const [name, nameProps] = defineField("name");
-const [password, passwordProps] = defineField("password");
+
+const [name] = defineField("name");
+const [password] = defineField("password");
 
 const login = handleSubmit(async () => {
   try {
     await authStore.login(values.name, values.password);
-    toast.success("Login successfully.");
+    toast.success("Login successful.");
     resetForm();
+    navigateTo("/");
   } catch (error) {
     toast.error("Login failed.");
     console.error(error);
   }
 });
-
-const user = computed(() => authStore.user);
 </script>
