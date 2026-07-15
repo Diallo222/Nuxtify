@@ -1,58 +1,114 @@
 <template lang="pug">
-    .p-2.relative.space-y-2(class="w-[10rem] md:w-[12rem] lg:w-[16rem]" )
-        button.p-2.flex.items-center.justify-center.rounded-full.absolute.top-2.right-2.transition(class="hover:bg-gray-200 hover:scale-110" :class="{ 'bg-black hover:bg-black': isFavorite, 'hover:bg-gray-200': !isFavorite }" @click="toggleFavorite" aria-label="Toggle favorite")
-            Icon.self-center(:class="isFavorite ? 'text-white' : 'text-black'" :name="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'")
-        img.w-full.object-contain.h-24.cursor-pointer.transition.duration-1000(class="md:h-52 hover:scale-105" :src="product.image" alt="Card image cap" @click="handleclick(product)")
-        .mt-2
-            p.text-sm.font-semibold.text-gray-600.uppercase {{product.category}}
-            .space-y-2
-            p.text-base.font-semibold.truncate {{product.title}}
-            .flex.items-center.justify-between
-                p.text-base.font-semibold.text-green-600 ${{product.price}}
-                .flex.items-center
-                    Icon.text-yellow-400(name="mdi:star")
-                    p.text-base.font-semibold.text-gray-600
-                        | {{product.rating?.rate || 'N/A'}} <span>| {{ product.rating?.count || '0' }}</span>
-        button.w-full.border.border-black.p-2.transition.uppercase.text-base.font-semibold(v-if="!isInCart" @click="addToCart(product)" class="md:text-lg hover:bg-zinc-900 hover:text-white hover:scale-110") Add to cart
-        button.w-full.border.border-black.p-2.transition.uppercase.text-base.text-white.bg-zinc-900.font-semibold(v-if="isInCart" @click="removeFromCart(product)" class="md:text-lg hover:bg-white hover:text-black hover:scale-110") Remove from cart
+  article.group.relative.flex.flex-col.gap-3(
+    :class="[articleClass, flashClass]"
+    data-reveal
+  )
+    .relative.overflow-hidden.bg-ink-muted(class="aspect-[3/4]")
+      button.absolute.top-3.right-3.z-10.p-2.text-paper.transition(
+        type="button"
+        aria-label="Toggle favorite"
+        class="hover:text-accent"
+        data-cursor="hover"
+        @click="toggleFavorite"
+      )
+        Icon(:name="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'" size="1.25em")
+      button.absolute.inset-0.w-full.h-full(type="button" @click="goToProduct" data-cursor="hover")
+        NuxtImg.w-full.h-full.object-contain.p-6.transition.duration-700(
+          class="group-hover:scale-105"
+          :class="imageClass"
+          :src="product.image"
+          :alt="product.title"
+          loading="lazy"
+        )
+      .absolute.inset-x-0.bottom-0.p-3.bg-gradient-to-t.from-ink.via-ink-80.to-transparent.transition.duration-500(
+        class="translate-y-0 md:translate-y-full md:group-hover:translate-y-0"
+      )
+        button.w-full.bg-accent.text-ink.font-display.font-bold.uppercase.text-xs.py-3.tracking-wide.transition(
+          type="button"
+          data-cursor="hover"
+          class="active:scale-95 active:brightness-90 hover:brightness-110"
+          @click.stop="toggleCart"
+        ) {{ isInCart ? 'Remove' : 'Quick add' }}
+    .space-y-1
+      p.uppercase.tracking-widest.text-ash(class="text-[10px]") {{ product.category }}
+      button.text-left.font-display.font-bold.leading-tight.line-clamp-2.transition-colors(
+        type="button"
+        class="hover:text-accent"
+        :class="titleClass"
+        @click="goToProduct"
+      ) {{ product.title }}
+      .flex.items-center.justify-between.gap-2
+        p.font-medium ${{ product.price }}
+        p.text-ash.text-xs(v-if="product.rating") ★ {{ product.rating.rate }}
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue-sonner";
+import type Product from "~/stores/types";
 import { useFavoritesStore } from "~/stores/favorites";
 import { useProductsStore } from "~/stores/products";
 import { useCartStore } from "~/stores/cart";
+import { useUiStore } from "~/stores/ui";
+
+const props = defineProps<{
+  product: Product;
+  featured?: boolean;
+}>();
 
 const favoritesStore = useFavoritesStore();
 const productStore = useProductsStore();
 const cartStore = useCartStore();
-
+const ui = useUiStore();
 const router = useRouter();
+const flashed = ref(false);
 
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true,
-  },
-});
+const articleClass = computed(() =>
+  props.featured ? "col-span-2 row-span-2" : ""
+);
+const imageClass = computed(() => (props.featured ? "p-10 md:p-16" : ""));
+const titleClass = computed(() =>
+  props.featured ? "text-xl md:text-3xl" : "text-sm md:text-base"
+);
+const flashClass = computed(() => (flashed.value ? "card-flash" : ""));
 
-const isFavorite = computed(() => {
-  return favoritesStore.isFavorite(props.product);
-});
-const isInCart = computed(() => {
-  return cartStore.inCart(props.product.id);
-});
+const isFavorite = computed(() => favoritesStore.isFavorite(props.product));
+const isInCart = computed(() => cartStore.inCart(props.product.id));
 
 const toggleFavorite = () => {
   favoritesStore.switchFavorite(props.product);
 };
-const handleclick = (selected: any) => {
-  productStore.selectedProduct = selected;
-  router.push(`/products/${selected.id}`);
+
+const goToProduct = () => {
+  productStore.setProduct(props.product);
+  router.push(`/products/${props.product.id}`);
 };
-const addToCart = (product: any) => {
-  cartStore.addProduct(product, 1);
-};
-const removeFromCart = (product: any) => {
-  cartStore.removeProduct(product);
+
+const toggleCart = () => {
+  if (isInCart.value) {
+    cartStore.removeProduct(props.product);
+    toast.message("Removed from cart");
+  } else {
+    cartStore.addProduct(props.product, 1);
+    toast.success("Added to cart");
+    flashed.value = true;
+    setTimeout(() => {
+      flashed.value = false;
+    }, 600);
+    ui.openCart();
+  }
 };
 </script>
+
+<style scoped>
+.via-ink-80 {
+  --tw-gradient-via: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+.from-ink {
+  --tw-gradient-from: var(--color-ink);
+}
+.card-flash {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 2px;
+  transition: outline-color 0.6s ease;
+}
+</style>

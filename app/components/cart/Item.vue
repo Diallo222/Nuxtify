@@ -1,55 +1,42 @@
 <template lang="pug">
-  .flex.flex-row.items-center.mb-1.gap-2
-    img.object-contain.h-24(class="md:h-24 w-28" :src="product.image" :alt="`Image of ${product.title}`")
-    .flex.flex-col.space-y-1(class="w-1/2")
-      p.text-base.font-semibold {{ product.title }}
-      p.text-sm.font-semibold.text-gray-600.uppercase {{ product.category }}
-      p.text-base.font-semibold.text-black ${{ product.price.toFixed(2) }}
-      .flex.items-center.justify-between
-        .flex.flex-row.justify-between.items-center.bg-zinc-900.rounded
-          button.px-2.transition(class="hover:scale-110" @click="decrement"  aria-label="Decrease quantity")
-            Icon(name="mdi:minus" style="color: white")
-          p.text-base.font-semibold.text-text-black.bg-white.py-1.px-4 {{ quantity }}
-          button.px-2.transition(class="hover:scale-110" @click="increment" aria-label="Increase quantity")
-            Icon(name="mdi:plus" style="color: white")
-        buttonpx-2.transition.cursor-pointer(class="hover:scale-150" @click="removeFromCart" aria-label="Remove from cart")
-          Icon(name="mdi:delete" style="color: black")
-  </template>
+  .flex.gap-4.items-center.border-b.border-white-10.py-4
+    NuxtImg.w-20.h-20.object-contain.bg-ink-muted.p-2(
+      :src="product.image"
+      :alt="product.title"
+    )
+    .flex-1.min-w-0.space-y-1
+      p.uppercase.tracking-widest.text-ash(class="text-[10px]") {{ product.category }}
+      p.font-display.font-bold.truncate.text-sm {{ product.title }}
+      p.text-sm ${{ product.price }}
+      ProductQuantifier(
+        :quantity="quantity"
+        @decrease="cart.decreaseQuantity(product)"
+        @increase="cart.addProduct(product, 1)"
+      )
+    button.text-ash.transition-colors(
+      type="button"
+      aria-label="Remove"
+      class="hover:text-accent"
+      data-cursor="hover"
+      @click="cart.removeProduct(product)"
+    )
+      Icon(name="mdi:close" size="1.2em")
+</template>
 
 <script setup lang="ts">
+import type Product from "~/stores/types";
 import { useCartStore } from "~/stores/cart";
 
-const cartStore = useCartStore();
+defineProps<{
+  product: Product;
+  quantity: number;
+}>();
 
-const props = defineProps({
-  product: {
-    type: Object as () => {
-      id: number;
-      title: string;
-      price: number;
-      image: string;
-    },
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
-
-const increment = () => {
-  cartStore.addProduct(props.product, 1);
-};
-
-const decrement = () => {
-  if (props.quantity > 1) {
-    cartStore.decreaseQuantity(props.product);
-  } else {
-    cartStore.removeProduct(props.product);
-  }
-};
-
-const removeFromCart = () => {
-  cartStore.removeProduct(props.product);
-};
+const cart = useCartStore();
 </script>
+
+<style scoped>
+.border-white-10 {
+  border-color: color-mix(in srgb, white 10%, transparent);
+}
+</style>

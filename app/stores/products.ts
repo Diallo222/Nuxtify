@@ -54,6 +54,19 @@ export const useProductsStore = defineStore("products", {
     clearProduct() {
       this.selectedProduct = null;
     },
+    async fetchProduct(id: number | string) {
+      this.productsLoading = true;
+      try {
+        const data = await useApi(`/products/${id}`, { method: "GET" });
+        this.selectedProduct = data;
+        return data as Product;
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+        return null;
+      } finally {
+        this.productsLoading = false;
+      }
+    },
   },
   getters: {
     allProducts: (state) => state.products,
