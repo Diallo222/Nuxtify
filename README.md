@@ -5,6 +5,8 @@ Click on image to see the demo
 
 A modern Nuxt.js E-commerce starter template. For detailed information, visit the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction).
 
+**Kinetic concept store redesign:** Syne + DM Sans, Lenis smooth scroll, GSAP motion, dark ink / chartreuse accent system — documented in [`DESIGN.md`](./DESIGN.md).
+
 ## Installation
 
 1. **Clone the repository:**
@@ -22,35 +24,29 @@ A modern Nuxt.js E-commerce starter template. For detailed information, visit th
 3. **Install dependencies:**
 
 ```bash
-# Install dependencies
-bun install
+# Install dependencies (requires Node ^22.12 || ^24.11 || >=26)
+pnpm install
 
 # Start development server (http://localhost:3000)
-bun run dev
+pnpm run dev
 
 # Build for production
-bun run build
+pnpm run build
 
 # Preview production build
-bun run preview
+pnpm run preview
 ```
-
-### Alternative Package Managers
-
-While Bun is recommended for optimal performance, you can also use:
-
-- **npm**: Use `npm install`, `npm run dev`, etc.
-- **pnpm**: Use `pnpm install`, `pnpm dev`, etc.
-- **yarn**: Use `yarn install`, `yarn dev`, etc.
 
 ## Tech Stack
 
 ### Client Stack
 - **Vue.js** - Progressive JavaScript Framework
-- **Nuxt 3** - Vue.js Framework for SSR/SSG
+- **Nuxt 4** - Vue.js Framework for SSR/SSG
 - **TypeScript** - JavaScript with syntax for types
 - **Pug** - Template engine for cleaner HTML
-- **Tailwind CSS** - Utility-first CSS framework
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **GSAP + Lenis** - Page transitions, scroll reveals, smooth scroll
+- **Pinia** - Client state (cart, favorites, auth)
 
 ### API
 
@@ -73,4 +69,3 @@ While Bun is recommended for optimal performance, you can also use:
 ## Feedback
 
 If you have any feedback, please reach out to me at almahadydiallo@gmail.com
-
